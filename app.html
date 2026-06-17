@@ -1,0 +1,1067 @@
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: var(--font-sans);
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .page {
+    padding: 1.5rem 0 2rem;
+  }
+  .topbar {
+    background: #e1f5ee;
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1.5rem;
+    border: 0.5px solid #9fe1cb;
+  }
+  .topbar-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #1d9e75;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .topbar-text h1 {
+    font-size: 19px;
+    font-weight: 500;
+    color: #085041;
+  }
+  .topbar-text p {
+    font-size: 13px;
+    color: #0f6e56;
+    margin-top: 2px;
+  }
+  .badge {
+    display: inline-block;
+    background: #1d9e75;
+    color: #e1f5ee;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .section-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+    padding-bottom: 10px;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+  }
+  .section-head-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: var(--border-radius-md);
+    background: #e1f5ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f6e56;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section-head h2 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .grid3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  label.lbl {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.01em;
+  }
+  input,
+  select {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    background: var(--color-background-primary);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    font-family: var(--font-sans);
+    transition: border-color 0.15s;
+  }
+  input:focus,
+  select:focus {
+    outline: none;
+    border-color: #1d9e75;
+    box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.12);
+  }
+  input::placeholder {
+    color: var(--color-text-tertiary);
+  }
+  .gst-toggle {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .gst-tab {
+    height: 38px;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-secondary);
+    background: var(--color-background-secondary);
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.15s;
+    font-family: var(--font-sans);
+  }
+  .gst-tab.active {
+    background: #1d9e75;
+    color: #fff;
+    border-color: #1d9e75;
+    font-weight: 500;
+  }
+  .gst-tab:not(.active):hover {
+    background: var(--color-background-primary);
+    border-color: var(--color-border-primary);
+  }
+  .items-wrap {
+    overflow-x: auto;
+    border-radius: var(--border-radius-md);
+    border: 0.5px solid var(--color-border-tertiary);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    table-layout: fixed;
+  }
+  thead {
+    background: #e1f5ee;
+  }
+  thead th {
+    font-size: 11px;
+    font-weight: 500;
+    color: #085041;
+    text-align: left;
+    padding: 9px 10px;
+    border-bottom: 0.5px solid #9fe1cb;
+    white-space: nowrap;
+  }
+  tbody tr {
+    transition: background 0.1s;
+  }
+  tbody tr:hover {
+    background: var(--color-background-secondary);
+  }
+  tbody td {
+    padding: 7px 10px;
+    color: var(--color-text-primary);
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    vertical-align: middle;
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .num {
+    text-align: right;
+  }
+  .td-input {
+    border: none;
+    background: none;
+    width: 100%;
+    padding: 0;
+    height: 28px;
+    font-size: 13px;
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+  }
+  .td-input:focus {
+    outline: none;
+    color: #0f6e56;
+  }
+  .td-select {
+    border: none;
+    background: none;
+    height: 28px;
+    font-size: 13px;
+    width: 100%;
+    color: var(--color-text-secondary);
+    font-family: var(--font-sans);
+    cursor: pointer;
+  }
+  .td-select:focus {
+    outline: none;
+  }
+  .del-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-tertiary);
+    font-size: 16px;
+    padding: 3px 5px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    transition: all 0.15s;
+  }
+  .del-btn:hover {
+    color: #e24b4a;
+    background: #fcebeb;
+  }
+  .add-row-btn {
+    width: 100%;
+    border: 0.5px dashed var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    background: none;
+    color: #0f6e56;
+    font-size: 13px;
+    padding: 9px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    font-family: var(--font-sans);
+    transition: all 0.15s;
+  }
+  .add-row-btn:hover {
+    background: #e1f5ee;
+    border-color: #1d9e75;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    margin: 1rem 0;
+  }
+  .metric {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 14px 1rem;
+  }
+  .metric-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .metric-value {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+  .metric-value.accent {
+    color: #0f6e56;
+  }
+  .totals-box {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 1rem 1.25rem;
+  }
+  .t-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    font-size: 14px;
+    color: var(--color-text-primary);
+  }
+  .t-row:last-child {
+    border-bottom: none;
+  }
+  .t-row .lbl2 {
+    color: var(--color-text-secondary);
+    font-size: 13px;
+  }
+  .t-row.grand {
+    border-top: 1px solid var(--color-border-primary);
+    margin-top: 6px;
+    padding-top: 14px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #0f6e56;
+    border-bottom: none;
+  }
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+  .btn-ghost {
+    height: 42px;
+    border: 0.5px solid var(--color-border-secondary);
+    border-radius: var(--border-radius-md);
+    background: none;
+    color: var(--color-text-primary);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-family: var(--font-sans);
+    transition: all 0.15s;
+  }
+  .btn-ghost:hover {
+    background: var(--color-background-secondary);
+  }
+  .btn-green {
+    height: 42px;
+    background: #1d9e75;
+    border: none;
+    border-radius: var(--border-radius-md);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-family: var(--font-sans);
+    transition: background 0.15s;
+  }
+  .btn-green:hover {
+    background: #0f6e56;
+  }
+  .dh-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    height: 42px;
+    border-radius: var(--border-radius-md);
+    border: 1px solid #1d9e75;
+    color: #0f6e56;
+    background: none;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 10px;
+    transition: background 0.15s;
+    font-family: var(--font-sans);
+  }
+  .dh-link:hover {
+    background: #e1f5ee;
+  }
+  .footer-strip {
+    margin-top: 1.25rem;
+    padding: 12px 1rem;
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+  .footer-strip strong {
+    color: var(--color-text-primary);
+  }
+  .preview-wrap {
+    display: none;
+  }
+  .preview-wrap.show {
+    display: block;
+  }
+  .inv-doc {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+  }
+  .inv-topbar {
+    background: #e1f5ee;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 0.5px solid #9fe1cb;
+  }
+  .inv-topbar-left .inv-brand {
+    font-size: 26px;
+    font-weight: 500;
+    color: #085041;
+    letter-spacing: -0.5px;
+  }
+  .inv-topbar-left .inv-sub {
+    font-size: 13px;
+    color: #0f6e56;
+    margin-top: 2px;
+  }
+  .inv-topbar-right {
+    text-align: right;
+    font-size: 13px;
+    color: #0f6e56;
+    line-height: 1.8;
+  }
+  .inv-topbar-right strong {
+    color: #085041;
+  }
+  .inv-body {
+    padding: 1.5rem;
+  }
+  .inv-parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .party-card {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    padding: 12px 14px;
+  }
+  .party-pill {
+    font-size: 10px;
+    font-weight: 500;
+    color: #0f6e56;
+    background: #e1f5ee;
+    padding: 2px 8px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .party-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  .party-gstin {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 3px;
+  }
+  .inv-table-wrap {
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+  .inv-table-wrap table {
+    table-layout: auto;
+  }
+  .inv-table-wrap thead {
+    background: #e1f5ee;
+  }
+  .inv-table-wrap thead th {
+    color: #085041;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .inv-totals {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .inv-totals-inner {
+    min-width: 280px;
+  }
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #e1f5ee;
+    color: #085041;
+    margin-bottom: 1rem;
+  }
+  .notes-box {
+    background: var(--color-background-secondary);
+    border-radius: var(--border-radius-md);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--color-text-secondary);
+    margin-top: 1rem;
+  }
+  .computer-gen {
+    text-align: center;
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 0.5px solid var(--color-border-tertiary);
+  }
+</style>
+
+<div class="page">
+  <h2 class="sr-only">
+    GST Invoice Calculator — create, preview, and print GST-compliant invoices
+    instantly
+  </h2>
+
+  <div id="builder">
+    <div class="topbar">
+      <div class="topbar-icon">
+        <i class="ti ti-receipt-2" aria-hidden="true"></i>
+      </div>
+      <div class="topbar-text">
+        <h1>GST Invoice Calculator <span class="badge">Free</span></h1>
+        <p>Create tax invoices with automatic CGST / SGST / IGST breakdown</p>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-head-icon">
+          <i class="ti ti-building-store" aria-hidden="true"></i>
+        </div>
+        <h2>Business details</h2>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label class="lbl">Your business name</label
+          ><input
+            id="biz-name"
+            type="text"
+            placeholder="e.g. Sharma Enterprises"
+          />
+        </div>
+        <div class="field">
+          <label class="lbl">Your GSTIN</label
+          ><input
+            id="biz-gstin"
+            type="text"
+            placeholder="22AAAAA0000A1Z5"
+            maxlength="15"
+          />
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label class="lbl">Client / bill-to name</label
+          ><input id="client-name" type="text" placeholder="e.g. Mehta & Co." />
+        </div>
+        <div class="field">
+          <label class="lbl"
+            >Client GSTIN
+            <span style="font-weight: 400; color: var(--color-text-tertiary)"
+              >(optional)</span
+            ></label
+          ><input
+            id="client-gstin"
+            type="text"
+            placeholder="27BBBBB0000B1Z3"
+            maxlength="15"
+          />
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="field">
+          <label class="lbl">Invoice number</label
+          ><input id="inv-num" type="text" placeholder="INV-001" />
+        </div>
+        <div class="field">
+          <label class="lbl">Invoice date</label
+          ><input id="inv-date" type="date" />
+        </div>
+        <div class="field">
+          <label class="lbl">Due date</label><input id="due-date" type="date" />
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-head-icon">
+          <i class="ti ti-percentage" aria-hidden="true"></i>
+        </div>
+        <h2>GST type</h2>
+      </div>
+      <div class="gst-toggle">
+        <button class="gst-tab active" onclick="setGstType('intra')">
+          <i
+            class="ti ti-map-pin"
+            aria-hidden="true"
+            style="font-size: 15px"
+          ></i>
+          CGST + SGST &nbsp;<span style="font-size: 11px; opacity: 0.8"
+            >(intra-state)</span
+          >
+        </button>
+        <button class="gst-tab" onclick="setGstType('inter')">
+          <i class="ti ti-plane" aria-hidden="true" style="font-size: 15px"></i>
+          IGST &nbsp;<span style="font-size: 11px; opacity: 0.8"
+            >(inter-state)</span
+          >
+        </button>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-head-icon">
+          <i class="ti ti-list" aria-hidden="true"></i>
+        </div>
+        <h2>Line items</h2>
+      </div>
+      <div class="items-wrap">
+        <table id="items-table">
+          <thead>
+            <tr>
+              <th style="width: 36%">Description</th>
+              <th class="num" style="width: 11%">Qty</th>
+              <th class="num" style="width: 17%">Rate (₹)</th>
+              <th class="num" style="width: 14%">GST %</th>
+              <th class="num" style="width: 17%">Total (₹)</th>
+              <th style="width: 5%"></th>
+            </tr>
+          </thead>
+          <tbody id="items-body"></tbody>
+        </table>
+      </div>
+      <button class="add-row-btn" onclick="addRow()">
+        <i class="ti ti-plus" aria-hidden="true" style="font-size: 15px"></i>
+        Add line item
+      </button>
+      <div class="summary-grid" style="margin-top: 1.25rem">
+        <div class="metric">
+          <div class="metric-label">Items</div>
+          <div class="metric-value" id="s-count">0</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Subtotal</div>
+          <div class="metric-value" id="s-sub">₹0</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Total GST</div>
+          <div class="metric-value" id="s-gst">₹0</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Grand total</div>
+          <div class="metric-value accent" id="s-grand">₹0</div>
+        </div>
+      </div>
+      <div class="totals-box">
+        <div class="t-row">
+          <span class="lbl2">Subtotal (excl. GST)</span
+          ><span id="t-sub">₹0.00</span>
+        </div>
+        <div id="gst-breakdown"></div>
+        <div class="t-row grand">
+          <span>Total payable</span><span id="t-grand">₹0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-head-icon">
+          <i class="ti ti-notes" aria-hidden="true"></i>
+        </div>
+        <h2>Notes & terms</h2>
+      </div>
+      <div class="field">
+        <label class="lbl"
+          >Payment terms / additional notes
+          <span style="font-weight: 400; color: var(--color-text-tertiary)"
+            >(optional)</span
+          ></label
+        >
+        <input
+          id="inv-notes"
+          type="text"
+          placeholder="e.g. Please pay within 30 days via NEFT."
+        />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-ghost" onclick="clearAll()">
+        <i class="ti ti-refresh" aria-hidden="true"></i> Clear all
+      </button>
+      <button class="btn-green" onclick="showPreview()">
+        <i class="ti ti-eye" aria-hidden="true"></i> Preview invoice
+      </button>
+    </div>
+
+    <a
+      href="https://digitalheroesco.com"
+      class="dh-link"
+      target="_blank"
+      rel="noopener"
+    >
+      <i
+        class="ti ti-external-link"
+        aria-hidden="true"
+        style="font-size: 15px"
+      ></i>
+      Built for Digital Heroes
+    </a>
+
+    <div class="footer-strip">
+      <span
+        ><i
+          class="ti ti-user"
+          aria-hidden="true"
+          style="font-size: 14px; vertical-align: -2px; margin-right: 4px"
+        ></i>
+        <strong>Aniket Beri</strong></span
+      >
+      <span
+        ><i
+          class="ti ti-mail"
+          aria-hidden="true"
+          style="font-size: 14px; vertical-align: -2px; margin-right: 4px"
+        ></i>
+        berianiket2022@gmail.com</span
+      >
+    </div>
+  </div>
+
+  <div class="preview-wrap" id="preview-section">
+    <div
+      style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem"
+    >
+      <div class="status-chip">
+        <i class="ti ti-check" aria-hidden="true" style="font-size: 13px"></i>
+        Invoice ready
+      </div>
+    </div>
+    <div class="inv-doc">
+      <div class="inv-topbar">
+        <div class="inv-topbar-left">
+          <div class="inv-brand">Tax Invoice</div>
+          <div class="inv-sub" id="p-biz-name"></div>
+          <div
+            style="font-size: 12px; color: #0f6e56; margin-top: 2px"
+            id="p-biz-gstin"
+          ></div>
+        </div>
+        <div class="inv-topbar-right" id="p-meta"></div>
+      </div>
+      <div class="inv-body">
+        <div class="inv-parties">
+          <div class="party-card">
+            <div class="party-pill">Bill to</div>
+            <div class="party-name" id="p-client"></div>
+            <div class="party-gstin" id="p-client-gstin"></div>
+          </div>
+          <div class="party-card">
+            <div class="party-pill">Invoice info</div>
+            <div
+              class="party-gstin"
+              style="line-height: 1.9"
+              id="p-inv-detail"
+            ></div>
+          </div>
+        </div>
+        <div class="inv-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 4%; padding-left: 12px">#</th>
+                <th style="width: 38%">Description</th>
+                <th class="num" style="width: 10%">Qty</th>
+                <th class="num" style="width: 16%">Rate</th>
+                <th class="num" style="width: 12%">GST</th>
+                <th class="num" style="width: 20%; padding-right: 12px">
+                  Amount
+                </th>
+              </tr>
+            </thead>
+            <tbody id="p-items"></tbody>
+          </table>
+        </div>
+        <div class="inv-totals">
+          <div class="inv-totals-inner">
+            <div class="t-row">
+              <span class="lbl2">Subtotal</span><span id="p-sub"></span>
+            </div>
+            <div id="p-gst-breakdown"></div>
+            <div class="t-row grand">
+              <span>Total payable</span><span id="p-grand"></span>
+            </div>
+          </div>
+        </div>
+        <div class="notes-box" id="p-notes" style="display: none"></div>
+        <div
+          style="
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 0.5px solid var(--color-border-tertiary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="font-size: 12px; color: var(--color-text-secondary)">
+            <strong style="color: var(--color-text-primary)"
+              >Aniket Beri</strong
+            >
+            &nbsp;|&nbsp; berianiket2022@gmail.com
+          </div>
+          <div class="computer-gen" style="border: none; margin: 0; padding: 0">
+            This is a computer-generated invoice.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="actions" style="margin-top: 1rem">
+      <button class="btn-ghost" onclick="backToEdit()">
+        <i class="ti ti-arrow-left" aria-hidden="true"></i> Back to edit
+      </button>
+      <button class="btn-green" onclick="window.print()">
+        <i class="ti ti-printer" aria-hidden="true"></i> Print / Save PDF
+      </button>
+    </div>
+    <a
+      href="https://digitalheroesco.com"
+      class="dh-link"
+      target="_blank"
+      rel="noopener"
+    >
+      <i
+        class="ti ti-external-link"
+        aria-hidden="true"
+        style="font-size: 15px"
+      ></i>
+      Built for Digital Heroes
+    </a>
+    <div class="footer-strip" style="margin-top: 10px">
+      <span
+        ><i
+          class="ti ti-user"
+          aria-hidden="true"
+          style="font-size: 14px; vertical-align: -2px; margin-right: 4px"
+        ></i>
+        <strong>Aniket Beri</strong></span
+      >
+      <span
+        ><i
+          class="ti ti-mail"
+          aria-hidden="true"
+          style="font-size: 14px; vertical-align: -2px; margin-right: 4px"
+        ></i>
+        berianiket2022@gmail.com</span
+      >
+    </div>
+  </div>
+</div>
+
+<script>
+  let gstType = "intra",
+    rows = [],
+    nextId = 1;
+  const GST = [0, 5, 12, 18, 28];
+  function setGstType(t) {
+    gstType = t;
+    document
+      .querySelectorAll(".gst-tab")
+      .forEach((b, i) =>
+        b.classList.toggle(
+          "active",
+          (i === 0 && t === "intra") || (i === 1 && t === "inter"),
+        ),
+      );
+    recalc();
+  }
+  function addRow(d = "", q = 1, r = 0, g = 18) {
+    rows.push({ id: nextId++, desc: d, qty: q, rate: r, gst: g });
+    renderRows();
+  }
+  function removeRow(id) {
+    rows = rows.filter((r) => r.id !== id);
+    renderRows();
+  }
+  function renderRows() {
+    document.getElementById("items-body").innerHTML = rows
+      .map(
+        (r) => `
+    <tr>
+      <td><input class="td-input" type="text" value="${r.desc}" placeholder="Item or service description" oninput="upd(${r.id},'desc',this.value)"/></td>
+      <td><input class="td-input num" type="number" value="${r.qty}" min="0.01" step="0.01" oninput="upd(${r.id},'qty',+this.value)" style="text-align:right"/></td>
+      <td><input class="td-input num" type="number" value="${r.rate}" min="0" step="0.01" oninput="upd(${r.id},'rate',+this.value)" style="text-align:right"/></td>
+      <td><select class="td-select num" onchange="upd(${r.id},'gst',+this.value)">${GST.map((g) => `<option value="${g}"${g === r.gst ? " selected" : ""}>${g}%</option>`).join("")}</select></td>
+      <td class="num" id="amt-${r.id}" style="font-variant-numeric:tabular-nums">₹${rowTotal(r).toFixed(2)}</td>
+      <td><button class="del-btn" onclick="removeRow(${r.id})" aria-label="Remove item"><i class="ti ti-trash" aria-hidden="true"></i></button></td>
+    </tr>`,
+      )
+      .join("");
+    recalc();
+  }
+  function upd(id, f, v) {
+    const r = rows.find((r) => r.id === id);
+    if (r) {
+      r[f] = v;
+      const el = document.getElementById("amt-" + id);
+      if (el) el.textContent = "₹" + rowTotal(r).toFixed(2);
+      recalc();
+    }
+  }
+  function rowBase(r) {
+    return (r.qty || 0) * (r.rate || 0);
+  }
+  function rowGst(r) {
+    return (rowBase(r) * (r.gst || 0)) / 100;
+  }
+  function rowTotal(r) {
+    return rowBase(r) + rowGst(r);
+  }
+  function fmt(n) {
+    return (
+      "₹" +
+      n.toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      })
+    );
+  }
+  function recalc() {
+    const sub = rows.reduce((a, r) => a + rowBase(r), 0);
+    const gstAmt = rows.reduce((a, r) => a + rowGst(r), 0);
+    const grand = sub + gstAmt;
+    document.getElementById("s-count").textContent = rows.length;
+    document.getElementById("s-sub").textContent = fmt(sub);
+    document.getElementById("s-gst").textContent = fmt(gstAmt);
+    document.getElementById("s-grand").textContent = fmt(grand);
+    document.getElementById("t-sub").textContent = fmt(sub);
+    document.getElementById("t-grand").textContent = fmt(grand);
+    const bd = document.getElementById("gst-breakdown");
+    if (gstType === "intra") {
+      const h = gstAmt / 2;
+      bd.innerHTML = `<div class="t-row"><span class="lbl2">CGST</span><span>${fmt(h)}</span></div><div class="t-row"><span class="lbl2">SGST</span><span>${fmt(h)}</span></div>`;
+    } else {
+      bd.innerHTML = `<div class="t-row"><span class="lbl2">IGST</span><span>${fmt(gstAmt)}</span></div>`;
+    }
+  }
+  function showPreview() {
+    const bn = document.getElementById("biz-name").value || "Your Business";
+    const bg = document.getElementById("biz-gstin").value;
+    const cn = document.getElementById("client-name").value || "Client Name";
+    const cg = document.getElementById("client-gstin").value;
+    const inum = document.getElementById("inv-num").value || "INV-001";
+    const idate = document.getElementById("inv-date").value;
+    const ddate = document.getElementById("due-date").value;
+    const notes = document.getElementById("inv-notes").value;
+    document.getElementById("p-biz-name").textContent = bn;
+    document.getElementById("p-biz-gstin").textContent = bg
+      ? "GSTIN: " + bg
+      : "";
+    document.getElementById("p-client").textContent = cn;
+    document.getElementById("p-client-gstin").textContent = cg
+      ? "GSTIN: " + cg
+      : "";
+    document.getElementById("p-meta").innerHTML =
+      `<strong>${inum}</strong><br>${idate || "—"}<br>Due: ${ddate || "—"}`;
+    document.getElementById("p-inv-detail").innerHTML =
+      `No: <strong>${inum}</strong><br>Date: ${idate || "—"}<br>Due: ${ddate || "—"}`;
+    const notesEl = document.getElementById("p-notes");
+    if (notes) {
+      notesEl.style.display = "block";
+      notesEl.innerHTML =
+        '<i class="ti ti-notes" aria-hidden="true" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>' +
+        notes;
+    } else {
+      notesEl.style.display = "none";
+    }
+    const sub = rows.reduce((a, r) => a + rowBase(r), 0);
+    const gstAmt = rows.reduce((a, r) => a + rowGst(r), 0);
+    const grand = sub + gstAmt;
+    document.getElementById("p-sub").textContent = fmt(sub);
+    document.getElementById("p-grand").textContent = fmt(grand);
+    const pbd = document.getElementById("p-gst-breakdown");
+    if (gstType === "intra") {
+      const h = gstAmt / 2;
+      pbd.innerHTML = `<div class="t-row"><span class="lbl2">CGST</span><span>${fmt(h)}</span></div><div class="t-row"><span class="lbl2">SGST</span><span>${fmt(h)}</span></div>`;
+    } else {
+      pbd.innerHTML = `<div class="t-row"><span class="lbl2">IGST</span><span>${fmt(gstAmt)}</span></div>`;
+    }
+    document.getElementById("p-items").innerHTML = rows
+      .map(
+        (r, i) => `
+    <tr>
+      <td style="padding-left:12px;color:var(--color-text-secondary)">${i + 1}</td>
+      <td>${r.desc || "—"}</td>
+      <td class="num">${r.qty}</td>
+      <td class="num">${fmt(r.rate)}</td>
+      <td class="num" style="color:var(--color-text-secondary)">${r.gst}%</td>
+      <td class="num" style="padding-right:12px;font-weight:500">${fmt(rowTotal(r))}</td>
+    </tr>`,
+      )
+      .join("");
+    document.getElementById("builder").style.display = "none";
+    document.getElementById("preview-section").classList.add("show");
+  }
+  function backToEdit() {
+    document.getElementById("builder").style.display = "block";
+    document.getElementById("preview-section").classList.remove("show");
+  }
+  function clearAll() {
+    rows = [];
+    nextId = 1;
+    [
+      "biz-name",
+      "biz-gstin",
+      "client-name",
+      "client-gstin",
+      "inv-num",
+      "inv-notes",
+    ].forEach((id) => (document.getElementById(id).value = ""));
+    renderRows();
+  }
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("inv-date").value = today;
+  const due = new Date();
+  due.setDate(due.getDate() + 30);
+  document.getElementById("due-date").value = due.toISOString().split("T")[0];
+  addRow("Website design services", 1, 25000, 18);
+  addRow("Monthly SEO retainer", 1, 10000, 18);
+</script>
